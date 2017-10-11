@@ -51,7 +51,10 @@
         </activity>
         <activity android:name=".ui.SettingActivity" />
         <activity android:name=".ui.InfoContent" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.ForgetPasswordActivity" />
+        <activity android:name=".ui.PhoneActivity"></activity>
     </application>
 
 </manifest>

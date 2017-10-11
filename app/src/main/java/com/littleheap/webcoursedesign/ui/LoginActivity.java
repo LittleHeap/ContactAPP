@@ -16,12 +16,13 @@ import com.littleheap.webcoursedesign.MainActivity;
 import com.littleheap.webcoursedesign.R;
 import com.littleheap.webcoursedesign.entity.MyUser;
 import com.littleheap.webcoursedesign.utils.ShareUtils;
+import com.littleheap.webcoursedesign.utils.StaticClass;
 import com.littleheap.webcoursedesign.view.CustomDialog;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_register, btn_login;
     private EditText et_name, et_code;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_register:
-//                startActivity(new Intent(this, RegisterActivity.class));
+                startActivity(new Intent(this, RegisterActivity.class));
                 break;
             case R.id.btn_login:
                 //1.获取输入框内的用户名和密码
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (user.getEmailVerified()) {
                                     //登录成功跳转进入主类
                                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                    ShareUtils.putString(LoginActivity.this, "user", et_name.getText().toString().trim());
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 } else {
@@ -107,14 +109,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.tv_forget:
-//                startActivity(new Intent(this, ForgetPasswordActivity.class));
+                startActivity(new Intent(this, ForgetPasswordActivity.class));
                 break;
         }
     }
+
     //登录成功之后，销毁时才保存用户名密码
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        //记录当前用户
+        ShareUtils.putString(this, "user", et_name.getText().toString().trim());
 
         //保存状态
         ShareUtils.putBoolean(this, "keep_password", keep_password.isChecked());

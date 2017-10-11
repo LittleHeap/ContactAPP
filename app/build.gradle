@@ -25,12 +25,23 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //Tablayout
+    //Bomb
+    //CircleImageView
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
-    testCompile 'junit:junit:4.12'
-    //Bomb
     compile 'cn.bmob.android:bmob-sdk:latest.release'
-    //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    testCompile 'junit:junit:4.12'
+    //Rxvolley
+    compile('com.kymjs.rxvolley:rxvolley:1.1.4') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'io.reactivex'
+    }
+    //RxVolley下载模块
+    compile('com.kymjs.rxvolley:okhttp:1.1.0') {
+        exclude group: 'com.squareup.okhttp3'
+        exclude group: 'com.squareup.okio'
+    }
 }

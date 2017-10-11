@@ -9,10 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.littleheap.webcoursedesign.fragment.ContactFragment;
 import com.littleheap.webcoursedesign.fragment.UserFragment;
 import com.littleheap.webcoursedesign.ui.SettingActivity;
+import com.littleheap.webcoursedesign.utils.ShareUtils;
+import com.littleheap.webcoursedesign.utils.StaticClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         //去阴影
         getSupportActionBar().setElevation(0);
+        //测试当前情况
+        Toast.makeText(this, ShareUtils.getString(this, "user", ""),Toast.LENGTH_LONG).show();
         //初始化数据
         initData();
         //初始化界面

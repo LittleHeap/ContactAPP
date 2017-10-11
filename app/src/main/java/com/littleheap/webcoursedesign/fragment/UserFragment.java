@@ -20,10 +20,14 @@ import android.widget.Toast;
 import com.littleheap.webcoursedesign.R;
 import com.littleheap.webcoursedesign.entity.MyUser;
 import com.littleheap.webcoursedesign.ui.LoginActivity;
+import com.littleheap.webcoursedesign.ui.PhoneActivity;
 import com.littleheap.webcoursedesign.view.CustomDialog;
 
 import java.io.File;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -70,18 +74,28 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         //圆形头像
         profile_image = view.findViewById(R.id.profile_image);
         profile_image.setOnClickListener(this);
-        //EditText默认是不可输入的
-        setEnable(false);
         //初始化Dialog
         dialog = new CustomDialog(getActivity(), R.layout.dialog_photo, R.style.Theme_dialog);
         //提示框外点击无效
         dialog.setCancelable(false);
+        //圆形头像处理按钮
+        btn_camera = dialog.findViewById(R.id.btn_camera);
+        btn_camera.setOnClickListener(this);
+        btn_picture = dialog.findViewById(R.id.btn_picture);
+        btn_picture.setOnClickListener(this);
+        btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(this);
+        //EditText默认是不可输入的
+        setEnable(false);
         //设置当前用户属性值
-//        MyUser user = BmobUser.getCurrentUser(MyUser.class);
-//        et_username.setText(user.getUsername());
-//        et_sex.setText(user.isSex() ? "男" : "女");
-//        et_age.setText(user.getAge() + "");
-//        et_desc.setText(user.getDesc());
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
+        et_username.setText(user.getUsername());
+        et_sex.setText(user.isSex() ? "男" : "女");
+        et_age.setText(user.getAge() + "");
+        et_desc.setText(user.getDesc());
+        //归属地
+        tv_phone = view.findViewById(R.id.tv_phone);
+        tv_phone.setOnClickListener(this);
     }
 
     private void setEnable(boolean enable) {
@@ -95,55 +109,55 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_exit_user:
-//                //退出登录
-//                //1.清除缓存对象
-//                MyUser.logOut();
-//                //2.通过New把用户转换成null
-//                BmobUser currentUser = MyUser.getCurrentUser();
-//                //3.跳转至登录界面
-//                startActivity(new Intent(getActivity(), LoginActivity.class));
-//                getActivity().finish();
+                //退出登录
+                //1.清除缓存对象
+                MyUser.logOut();
+                //2.通过New把用户转换成null
+                BmobUser currentUser = MyUser.getCurrentUser();
+                //3.跳转至登录界面
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
                 break;
             case R.id.edit_user:
                 setEnable(true);
                 btn_update_ok.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_update_ok:
-//                //1.拿到输入框的值
-//                String username = et_username.getText().toString().trim();
-//                String sex = et_sex.getText().toString().trim();
-//                String age = et_age.getText().toString().trim();
-//                String desc = et_desc.getText().toString().trim();
-//                //2.判断是否为空
-//                if (!TextUtils.isEmpty(username) & !TextUtils.isEmpty(sex) & !TextUtils.isEmpty(age)) {
-//                    //3.获取新用户属性
-//                    MyUser user = new MyUser();
-//                    user.setUsername(username);
-//                    user.setSex(sex.equals("男") ? true : false);
-//                    user.setAge(Integer.parseInt(age));
-//                    if (!TextUtils.isEmpty(desc)) {
-//                        user.setDesc(desc);
-//                    } else {
-//                        user.setDesc("这个人很懒，什么都没有留下");
-//                    }
-//                    //4.更新服务器用户属性
-//                    BmobUser bmobUser = BmobUser.getCurrentUser();
-//                    user.update(bmobUser.getObjectId(), new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                //修改成功
-//                                setEnable(false);
-//                                btn_update_ok.setVisibility(View.GONE);
-//                                Toast.makeText(getActivity(), "修改成功", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(getActivity(), "修改失败", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    Toast.makeText(getActivity(), "输入框不能为空", Toast.LENGTH_SHORT).show();
-//                }
+                //1.拿到输入框的值
+                String username = et_username.getText().toString().trim();
+                String sex = et_sex.getText().toString().trim();
+                String age = et_age.getText().toString().trim();
+                String desc = et_desc.getText().toString().trim();
+                //2.判断是否为空
+                if (!TextUtils.isEmpty(username) & !TextUtils.isEmpty(sex) & !TextUtils.isEmpty(age)) {
+                    //3.获取新用户属性
+                    MyUser user = new MyUser();
+                    user.setUsername(username);
+                    user.setSex(sex.equals("男") ? true : false);
+                    user.setAge(Integer.parseInt(age));
+                    if (!TextUtils.isEmpty(desc)) {
+                        user.setDesc(desc);
+                    } else {
+                        user.setDesc("这个人很懒，什么都没有留下");
+                    }
+                    //4.更新服务器用户属性
+                    BmobUser bmobUser = BmobUser.getCurrentUser();
+                    user.update(bmobUser.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                //修改成功
+                                setEnable(false);
+                                btn_update_ok.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), "修改成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "修改失败", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "输入框不能为空", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.profile_image:
                 dialog.show();
@@ -158,7 +172,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 toPicture();
                 break;
             case R.id.tv_phone:
-//                startActivity(new Intent(getActivity(), PhoneActivity.class));
+                startActivity(new Intent(getActivity(), PhoneActivity.class));
                 break;
         }
     }
