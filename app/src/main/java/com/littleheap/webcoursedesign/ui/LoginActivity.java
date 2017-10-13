@@ -81,28 +81,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     final MyUser user = new MyUser();
                     user.setUsername(name);
                     user.setPassword(code);
-                    user.login(new SaveListener<MyUser>() {
-                        @Override
-                        public void done(MyUser myUser, BmobException e) {
-                            //消失正在登陆
-                            dialog.dismiss();
-                            //判断是否异常
-                            if (e == null) {
-                                //判断邮箱是否验证成功
-                                if (user.getEmailVerified()) {
-                                    //登录成功跳转进入主类
-                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                                    ShareUtils.putString(LoginActivity.this, "user", et_name.getText().toString().trim());
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "请前往邮箱验证", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+
+                    dialog.dismiss();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+//                    user.login(new SaveListener<MyUser>() {
+//                        @Override
+//                        public void done(MyUser myUser, BmobException e) {
+//                            //消失正在登陆
+//                            dialog.dismiss();
+//                            //判断是否异常
+//                            if (e == null) {
+//                                //判断邮箱是否验证成功
+//                                if (true) {
+//                                    //user.getEmailVerified()
+//                                    //登录成功跳转进入主类
+//                                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+//                                    ShareUtils.putString(LoginActivity.this, "user", et_name.getText().toString().trim());
+//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                    finish();
+//                                } else {
+//                                    Toast.makeText(LoginActivity.this, "请前往邮箱验证", Toast.LENGTH_SHORT).show();
+//                                }
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
 
                 } else {
                     Toast.makeText(this, "输入框不能为空", Toast.LENGTH_SHORT).show();
