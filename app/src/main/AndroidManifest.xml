@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.littleheap.webcoursedesign">
 
+    <!-- 打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 读取Log -->
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 允许联网 -->
@@ -54,7 +56,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.ForgetPasswordActivity" />
-        <activity android:name=".ui.PhoneActivity"></activity>
+        <activity android:name=".ui.PhoneActivity" />
+        <activity android:name=".ui.InfoAdd"></activity>
     </application>
 
 </manifest>

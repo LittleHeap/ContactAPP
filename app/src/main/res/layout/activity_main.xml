@@ -30,6 +30,16 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:layout_marginBottom="75dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/fab_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/refresh"/>
+
+    <android.support.design.widget.FloatingActionButton
         android:layout_marginBottom="15dp"
         android:layout_marginRight="15dp"
         android:layout_alignParentBottom="true"
@@ -38,5 +48,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/setting"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add"/>
+
 
 </RelativeLayout>

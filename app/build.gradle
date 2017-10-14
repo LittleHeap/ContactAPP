@@ -27,12 +27,6 @@ dependencies {
     //Tablayout
     //Bomb
     //CircleImageView
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.+'
-    compile 'cn.bmob.android:bmob-sdk:latest.release'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
-    testCompile 'junit:junit:4.12'
     //Rxvolley
     compile('com.kymjs.rxvolley:rxvolley:1.1.4') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
@@ -44,4 +38,10 @@ dependencies {
         exclude group: 'com.squareup.okhttp3'
         exclude group: 'com.squareup.okio'
     }
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.+'
+    compile 'cn.bmob.android:bmob-sdk:latest.release'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    testCompile 'junit:junit:4.12'
 }

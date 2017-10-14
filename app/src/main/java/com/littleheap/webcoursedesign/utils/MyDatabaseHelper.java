@@ -11,13 +11,14 @@ import android.widget.Toast;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String CREATE_CONTACT = "create table ContactA (person text primary key, number text)";
-
     private Context mContext;
+
+    public static String CREATE_CONTACT = "";
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         mContext = context;
+        CREATE_CONTACT = "create table Contact_"+ShareUtils.getString(context,"user","")+" (person text primary key, number text)";
     }
 
     @Override
@@ -29,7 +30,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("drop table if exists ContactA");
+//        db.execSQL("drop table if exists ContactA");
+        db.execSQL("delete from Contact_"+ShareUtils.getString(mContext,"user",""));
         onCreate(db);
     }
 }

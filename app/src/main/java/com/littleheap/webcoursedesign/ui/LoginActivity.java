@@ -82,8 +82,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     user.setUsername(name);
                     user.setPassword(code);
 
+                    //记录当前用户
+                    ShareUtils.putString(this, "user", et_name.getText().toString().trim());
+
                     dialog.dismiss();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
 
 //                    user.login(new SaveListener<MyUser>() {
 //                        @Override

@@ -9,19 +9,7 @@
 
 
     <EditText
-        android:id="@+id/ed_person"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:text="Person"
-        android:textSize="32dp" />
-
-    <EditText
-        android:id="@+id/ed_number"
+        android:id="@+id/add_person"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -29,30 +17,28 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:text="Number"
+        android:hint="Person"
+        android:textSize="32dp" />
+
+    <EditText
+        android:id="@+id/add_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:hint="Number"
         android:textSize="32dp" />
 
     <Button
-        android:id="@+id/btn_call"
+        android:id="@+id/btn_add"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Call" />
+        android:text="Add" />
 
-    <Button
-        android:id="@+id/btn_update"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="Update" />
 
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="Delete" />
 </LinearLayout>
