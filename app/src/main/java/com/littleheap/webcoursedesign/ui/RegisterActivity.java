@@ -11,6 +11,12 @@ import android.widget.Toast;
 
 import com.littleheap.webcoursedesign.R;
 import com.littleheap.webcoursedesign.entity.MyUser;
+import com.littleheap.webcoursedesign.utils.StaticClass;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -50,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.btnRegister:
                 //获取输入框数据
-                String name = et_user.getText().toString().trim();
+                final String name = et_user.getText().toString().trim();
                 String age = et_age.getText().toString().trim();
                 String desc = et_desc.getText().toString().trim();
                 String pass = et_pass.getText().toString().trim();
@@ -94,6 +100,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             public void done(MyUser myUser, BmobException e) {
                                 if (e == null) {
                                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                                    //初始化Socket
+                                    StaticClass.socket= new Socket();
+                                    //设置3秒延迟
+                                    try {
+                                        StaticClass.socket.connect(new InetSocketAddress("10.0.2.2", 9999), 300);
+                                        PrintStream ps = new PrintStream(StaticClass.socket.getOutputStream());
+                                        ps.println("register&" + name);
+                                        ps.close();
+                                        StaticClass.socket.close();
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
                                     finish();
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "注册失败：" + e.toString(), Toast.LENGTH_SHORT).show();

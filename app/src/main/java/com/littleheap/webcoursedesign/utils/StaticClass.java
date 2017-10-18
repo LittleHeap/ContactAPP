@@ -1,10 +1,15 @@
 package com.littleheap.webcoursedesign.utils;
 
+import java.net.Socket;
+
 /**
  * Created by wangs on 2017/10/11.
  */
 
 public class StaticClass {
+
+    //Socket
+    public static Socket socket;
     //当前用户名
     public static String user="";
     //Bmob ID
@@ -13,6 +18,5 @@ public class StaticClass {
     public static final String PHONE_KEY = "22a6ba14995ce26dd0002216be51dabb";
     //联系人原始数据
     public static String CONTACT = "";
-
 
 }

@@ -24,6 +24,7 @@ import com.littleheap.webcoursedesign.fragment.ContactFragment;
 import com.littleheap.webcoursedesign.fragment.UserFragment;
 import com.littleheap.webcoursedesign.ui.InfoAdd;
 import com.littleheap.webcoursedesign.ui.SettingActivity;
+import com.littleheap.webcoursedesign.utils.DataBase;
 import com.littleheap.webcoursedesign.utils.MyDatabaseHelper;
 import com.littleheap.webcoursedesign.utils.ShareUtils;
 import com.littleheap.webcoursedesign.utils.StaticClass;
@@ -46,6 +47,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public BufferedReader br = null;
     public String message = "";
     public String user = "";
-
-    private static final String FILENAME = "b.txt";
     //数据库操作
     public static MyDatabaseHelper dbHelper;
-
-    Socket socket;
+    //网络连接
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setElevation(0);
         //测试当前情况
 //        Toast.makeText(this, ShareUtils.getString(this, "user", ""),Toast.LENGTH_LONG).show();
+        //初始化数据库
+        initDataBase();
         //连接服务器
         try {
             initConnect();
@@ -100,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //初始化数据库
-        initDataBase();
 
 //        //插入数据
 //        insertDataBase("Contact_"+user, "Tom", "13844171631");
@@ -121,54 +120,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ps.println("getcontact&" + user);
     }
 
+    //初始化本地数据库
     public void initDataBase() {
         dbHelper = new MyDatabaseHelper(this, "Contact.db", null, 2);
         dbHelper.getWritableDatabase();
     }
 
-    public void insertDataBase(String database, String person, String number) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("person", person);
-        values.put("number", number);
-        db.insert(database, null, values);
-        values.clear();
-    }
-
-    public void updateDataBase_number(String database, String person, String number) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("number", number);
-        db.update(database, values, "person = ?", new String[]{person});
-        values.clear();
-    }
-
-    public String selectDataBase(String database) {
-        String whole = "";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query(database, null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                String _person = cursor.getString(cursor.getColumnIndex("person"));
-                String _number = cursor.getString(cursor.getColumnIndex("number"));
-                whole = whole + _person + ":" + _number + ";";
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return whole;
-    }
+//    //将获取到的联系人号码数据插入当前用户数据库
+//    public void insertDataBase(String database, String person, String number) {
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("person", person);
+//        values.put("number", number);
+//        db.insert(database, null, values);
+//        values.clear();
+//    }
+//
+//    public void updateDataBase_number(String database, String person, String number) {
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("number", number);
+//        db.update(database, values, "person = ?", new String[]{person});
+//        values.clear();
+//    }
+//
+//    public String selectDataBase(String database) {
+//        String whole = "";
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        Cursor cursor = db.query(database, null, null, null, null, null, null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                String _person = cursor.getString(cursor.getColumnIndex("person"));
+//                String _number = cursor.getString(cursor.getColumnIndex("number"));
+//                whole = whole + _person + ":" + _number + ";";
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        return whole;
+//    }
 
     private void initConnect() throws Exception {
         //与服务器建立连接
         try {
-            socket = new Socket("10.0.2.2", 9999);
+            //初始化Socket
+            StaticClass.socket= new Socket();
+            //设置3秒延迟
+            StaticClass.socket.connect(new InetSocketAddress("10.0.2.2", 9999), 300);
+            Toast.makeText(this,"验证成功，连接服务器成功",Toast.LENGTH_SHORT).show();
         }catch (Exception e) {
             e.printStackTrace();
+            StaticClass.socket.close();
+            dbHelper.close();
+            Toast.makeText(this,"验证成功，连接服务器失败",Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         //初始化数据流
-        ps = new PrintStream(socket.getOutputStream());
-        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        ps = new PrintStream(StaticClass.socket.getOutputStream());
+        br = new BufferedReader(new InputStreamReader(StaticClass.socket.getInputStream()));
         //开线程死循环不断接受信息
         new Thread(new Runnable() {
             @Override
@@ -188,7 +197,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 //将最新获取的数据写入数据库
                                 for (int i = 0; i < msg.length; i++) {
                                     String[] info = msg[i].split(":");
-                                    insertDataBase("Contact_" + user, info[0], info[1]);
+//                                    insertDataBase("Contact_" + user, info[0], info[1]);
+                                    DataBase.insertDataBase(dbHelper,"Contact_" + user, info[0], info[1]);
                                 }
                                 break;
                         }
@@ -290,7 +300,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.fab_refresh:
-                StaticClass.CONTACT = selectDataBase("Contact_" + user);
+//                StaticClass.CONTACT = selectDataBase("Contact_" + user);
+                StaticClass.CONTACT = DataBase.selectDataBase(dbHelper,"Contact_" + user);
                 ps.println("update#"+user+"&"+StaticClass.CONTACT);
                 Toast.makeText(this,"Synchronize",Toast.LENGTH_SHORT).show();
                 break;
