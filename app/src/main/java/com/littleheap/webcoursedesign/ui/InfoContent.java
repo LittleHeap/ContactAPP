@@ -1,9 +1,6 @@
 package com.littleheap.webcoursedesign.ui;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,34 +60,6 @@ public class InfoContent extends AppCompatActivity implements View.OnClickListen
         ed_number.setText(infos[1]);
 
     }
-
-//    public void updateDataBase_number(String database, String person, String number) {
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("number", number);
-//        db.update(database, values, "person = ?", new String[]{person});
-//        values.clear();
-//    }
-//
-//    public void deleteDataBase(String database, String person) {
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        db.delete(database, "person = ?", new String[]{person});
-//    }
-//
-//    public String selectDataBase(String database) {
-//        String whole = "";
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        Cursor cursor = db.query(database, null, null, null, null, null, null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                String _person = cursor.getString(cursor.getColumnIndex("person"));
-//                String _number = cursor.getString(cursor.getColumnIndex("number"));
-//                whole = whole + _person + ":" + _number + ";";
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        return whole;
-//    }
 
     @Override
     public void onClick(View view) {

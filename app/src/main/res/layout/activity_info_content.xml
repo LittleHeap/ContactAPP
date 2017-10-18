@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:editable="false"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
@@ -38,7 +39,10 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Call" />
+        android:background="@drawable/button_bg"
+        android:text="Call"
+        android:textColor="@android:color/white"
+        android:textSize="17dp" />
 
     <Button
         android:id="@+id/btn_update"
@@ -46,7 +50,10 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Update" />
+        android:background="@drawable/button_bg"
+        android:text="Update"
+        android:textColor="@android:color/white"
+        android:textSize="17dp" />
 
     <Button
         android:id="@+id/btn_delete"
@@ -54,5 +61,8 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Delete" />
+        android:background="@drawable/button_bg"
+        android:text="Delete"
+        android:textColor="@android:color/white"
+        android:textSize="17dp" />
 </LinearLayout>

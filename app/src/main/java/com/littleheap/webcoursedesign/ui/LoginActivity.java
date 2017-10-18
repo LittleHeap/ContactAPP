@@ -4,20 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import com.littleheap.webcoursedesign.MainActivity;
 import com.littleheap.webcoursedesign.R;
 import com.littleheap.webcoursedesign.entity.MyUser;
 import com.littleheap.webcoursedesign.utils.ShareUtils;
-import com.littleheap.webcoursedesign.utils.StaticClass;
 import com.littleheap.webcoursedesign.view.CustomDialog;
 
 import cn.bmob.v3.exception.BmobException;
@@ -134,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void keepPassword(){
+    public void keepPassword() {
         //保存状态
         ShareUtils.putBoolean(this, "keep_password", keep_password.isChecked());
 

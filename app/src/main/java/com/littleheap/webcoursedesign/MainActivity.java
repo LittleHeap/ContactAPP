@@ -1,12 +1,6 @@
 package com.littleheap.webcoursedesign;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.IDNA;
-import android.net.Uri;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -15,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.VectorEnabledTintResources;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -29,28 +22,9 @@ import com.littleheap.webcoursedesign.utils.MyDatabaseHelper;
 import com.littleheap.webcoursedesign.utils.ShareUtils;
 import com.littleheap.webcoursedesign.utils.StaticClass;
 
-import org.apache.http.util.EncodingUtils;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -125,39 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbHelper = new MyDatabaseHelper(this, "Contact.db", null, 2);
         dbHelper.getWritableDatabase();
     }
-
-//    //将获取到的联系人号码数据插入当前用户数据库
-//    public void insertDataBase(String database, String person, String number) {
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("person", person);
-//        values.put("number", number);
-//        db.insert(database, null, values);
-//        values.clear();
-//    }
-//
-//    public void updateDataBase_number(String database, String person, String number) {
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("number", number);
-//        db.update(database, values, "person = ?", new String[]{person});
-//        values.clear();
-//    }
-//
-//    public String selectDataBase(String database) {
-//        String whole = "";
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        Cursor cursor = db.query(database, null, null, null, null, null, null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                String _person = cursor.getString(cursor.getColumnIndex("person"));
-//                String _number = cursor.getString(cursor.getColumnIndex("number"));
-//                whole = whole + _person + ":" + _number + ";";
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        return whole;
-//    }
 
     private void initConnect() throws Exception {
         //与服务器建立连接
@@ -258,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fab_refresh.setVisibility(View.VISIBLE);
                     fab_add.setVisibility(View.VISIBLE);
                 } else {
-                    fab_setting.setVisibility(View.VISIBLE);
+                    fab_setting.setVisibility(View.GONE);
                     fab_refresh.setVisibility(View.GONE);
                     fab_add.setVisibility(View.GONE);
                 }
@@ -311,29 +252,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //退出时同步
+        StaticClass.CONTACT = DataBase.selectDataBase(dbHelper,"Contact_" + user);
+        ps.println("update#"+user+"&"+StaticClass.CONTACT);
+        Toast.makeText(this,"Synchronize",Toast.LENGTH_SHORT).show();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
