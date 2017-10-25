@@ -88,34 +88,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     ShareUtils.putString(this, "user", et_name.getText().toString().trim());
 
                     //不联网操作
-//                    dialog.dismiss();
-//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    dialog.dismiss();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                     //联网操作
-                    user.login(new SaveListener<MyUser>() {
-                        @Override
-                        public void done(MyUser myUser, BmobException e) {
-                            //消失正在登陆
-                            dialog.dismiss();
-                            //判断是否异常
-                            if (e == null) {
-                                //判断邮箱是否验证成功
-                                if (user.getEmailVerified()) {
-                                    //user.getEmailVerified()邮箱确认返回值
-                                    //保存当前用户名
-                                    ShareUtils.putString(LoginActivity.this, "user", et_name.getText().toString().trim());
-                                    //记住密码
-                                    keepPassword();
-                                    //登录成功跳转进入主类
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "请前往邮箱验证", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+//                    user.login(new SaveListener<MyUser>() {
+//                        @Override
+//                        public void done(MyUser myUser, BmobException e) {
+//                            //消失正在登陆
+//                            dialog.dismiss();
+//                            //判断是否异常
+//                            if (e == null) {
+//                                //判断邮箱是否验证成功
+//                                if (user.getEmailVerified()) {
+//                                    //user.getEmailVerified()邮箱确认返回值
+//                                    //保存当前用户名
+//                                    ShareUtils.putString(LoginActivity.this, "user", et_name.getText().toString().trim());
+//                                    //记住密码
+//                                    keepPassword();
+//                                    //登录成功跳转进入主类
+//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                } else {
+//                                    Toast.makeText(LoginActivity.this, "请前往邮箱验证", Toast.LENGTH_SHORT).show();
+//                                }
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
 
                 } else {
                     Toast.makeText(this, "输入框不能为空", Toast.LENGTH_SHORT).show();

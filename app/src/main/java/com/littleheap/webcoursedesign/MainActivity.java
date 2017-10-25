@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //数据库操作
     public static MyDatabaseHelper dbHelper;
     //网络连接
+    private boolean connect = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //获取当前用户名
         user = ShareUtils.getString(this, "user", "");
 
@@ -65,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setElevation(0);
         //测试当前情况
 //        Toast.makeText(this, ShareUtils.getString(this, "user", ""),Toast.LENGTH_LONG).show();
-        //初始化数据库
-        initDataBase();
+
         //连接服务器
         try {
             initConnect();
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //初始化数据库
+        initDataBase();
 
 //        //插入数据
 //        insertDataBase("Contact_"+user, "Tom", "13844171631");
@@ -108,11 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //设置3秒延迟
             StaticClass.socket.connect(new InetSocketAddress("10.0.2.2", 9999), 300);
             Toast.makeText(this,"验证成功，连接服务器成功",Toast.LENGTH_SHORT).show();
+            connect = true;
         }catch (Exception e) {
             e.printStackTrace();
             StaticClass.socket.close();
             dbHelper.close();
             Toast.makeText(this,"验证成功，连接服务器失败",Toast.LENGTH_SHORT).show();
+            connect = false;
             finish();
         }
 
@@ -258,7 +264,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         //退出时同步
         StaticClass.CONTACT = DataBase.selectDataBase(dbHelper,"Contact_" + user);
-        ps.println("update#"+user+"&"+StaticClass.CONTACT);
-        Toast.makeText(this,"Synchronize",Toast.LENGTH_SHORT).show();
+        if (connect){
+            ps.println("update#"+user+"&"+StaticClass.CONTACT);
+            Toast.makeText(this,"Synchronize",Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.littleheap.webcoursedesign.R;
 import com.littleheap.webcoursedesign.entity.MyUser;
+import com.littleheap.webcoursedesign.utils.ShareUtils;
 import com.littleheap.webcoursedesign.utils.StaticClass;
 
 import java.io.IOException;
@@ -94,6 +95,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         user.setAge(Integer.parseInt(age));
                         user.setSex(sex);
                         user.setDesc(desc);
+
+                        ShareUtils.putString(this, "user", name.toString().trim());
 
                         user.signUp(new SaveListener<MyUser>() {
                             @Override

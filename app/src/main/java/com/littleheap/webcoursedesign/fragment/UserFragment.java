@@ -88,11 +88,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         //EditText默认是不可输入的
         setEnable(false);
         //设置当前用户属性值
-        MyUser user = BmobUser.getCurrentUser(MyUser.class);
-        et_username.setText(user.getUsername());
-        et_sex.setText(user.isSex() ? "男" : "女");
-        et_age.setText(user.getAge() + "");
-        et_desc.setText(user.getDesc());
+//        MyUser user = BmobUser.getCurrentUser(MyUser.class);
+//        et_username.setText(user.getUsername());
+//        et_sex.setText(user.isSex() ? "男" : "女");
+//        et_age.setText(user.getAge() + "");
+//        et_desc.setText(user.getDesc());
         //归属地
         tv_phone = view.findViewById(R.id.tv_phone);
         tv_phone.setOnClickListener(this);
