@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ContactAPP.iml" filepath="$PROJECT_DIR$/ContactAPP.iml" />
       <module fileurl="file://$PROJECT_DIR$/WebCourseDesign.iml" filepath="$PROJECT_DIR$/WebCourseDesign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
